@@ -50,11 +50,11 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[url('/bg.png')] bg-cover bg-center h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[url('/bg.png')] bg-cover bg-center h-screen flex items-center justify-center">
       <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
         {/* Left Image Section with rounded left corners */}
         <div className="bg-blue-600 flex items-center justify-center md:w-1/2 h-48 md:h-auto p-4 rounded-l-xl">
-          <div className="p-4 rounded-full">
+          <div className="p-4 scale-50 md:scale-100 rounded-full">
             <Image
               src="/logo.png"
               alt="Hear Wise"
