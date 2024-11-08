@@ -3,7 +3,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { FaEnvelope } from "react-icons/fa";
 import InputField from "../components/InputField";
-import PasswordField from "../components/PasswordFIeld";
+import PasswordField from "../components/PasswordField";
+
 export default function LoginPage() {
   const [formData, setFormData] = useState({
     email: "",
@@ -49,30 +50,23 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[url('/bg.png')] bg-cover bg-center h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
-        {/* Left Image Section */}
-        <div className="md:w-1/2 relative h-48 md:h-auto">
-          <Image
-            src="/Modern Illustrative Recipe Book Cover.png"
-            alt="Recipe Book Cover"
-            layout="fill"
-            objectFit="cover"
-            priority
-            className="hidden md:block"
-          />
-          <Image
-            src="/Modern Illustrative Recipe Book Cover Mobile.png"
-            alt="Recipe Book Cover Mobile"
-            layout="fill"
-            objectFit="cover"
-            priority
-            className="md:hidden"
-          />
+        {/* Left Image Section with rounded left corners */}
+        <div className="bg-blue-600 flex items-center justify-center md:w-1/2 h-48 md:h-auto p-4 rounded-l-xl">
+          <div className="p-4 rounded-full">
+            <Image
+              src="/logo.png"
+              alt="Hear Wise"
+              width={200}
+              height={200}
+              priority
+            />
+          </div>
         </div>
 
-        {/* Right Form Section */}
-        <div className="md:w-1/2 p-8 md:p-12">
+        {/* Right Form Section with rounded corners */}
+        <div className="md:w-1/2 rounded-r-xl shadow-xl p-8 md:p-12">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h1>
             <p className="text-gray-600">Sign in to your account</p>
@@ -95,22 +89,6 @@ export default function LoginPage() {
               onTogglePassword={() => setShowPassword(!showPassword)}
             />
 
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="rounded border-gray-300 text-green-600 shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50"
-                />
-                <span className="ml-2 text-gray-600">Remember me</span>
-              </label>
-              <a
-                href="/forgot-password"
-                className="text-green-600 hover:text-green-700 hover:underline"
-              >
-                Forgot password?
-              </a>
-            </div>
-
             {error && (
               <div className="bg-red-50 text-red-500 p-3 rounded-lg text-sm">
                 {error}
@@ -120,8 +98,8 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 bg-green-600 text-white font-semibold rounded-lg
-                hover:bg-green-700 focus:ring-4 focus:ring-green-200 transition-all
+              className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg
+                hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 transition-all
                 duration-200 ease-in-out disabled:opacity-70 disabled:cursor-not-allowed
                 flex items-center justify-center"
             >
@@ -149,10 +127,10 @@ export default function LoginPage() {
             Don't have an account?{" "}
             <a
               href="/register"
-              className="text-green-600 hover:text-green-700 font-medium hover:underline"
+              className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
             >
               Create account
-            </a>
+            </a> 
           </p>
         </div>
       </div>

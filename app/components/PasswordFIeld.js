@@ -3,7 +3,7 @@ import { FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export default function PasswordField({ value, onChange, showPassword, onTogglePassword }) {
   return (
-    <div className="relative flex items-center border-b-2 border-gray-300 focus-within:border-green-500 transition-colors duration-200">
+    <div className="relative flex items-center border-b-2 border-gray-300 focus-within:border-blue-500 transition-colors duration-200">
       <FaLock className="absolute left-3 text-gray-500" />
       <input
         type={showPassword ? "text" : "password"}

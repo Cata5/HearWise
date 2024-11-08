@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import Image from "next/image";
 import { FaUser, FaEnvelope } from "react-icons/fa";
@@ -50,30 +50,23 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[url('/bg.png')] flex items-center justify-center p-4 bg-cover bg-center">
       <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
-        {/* Left Image Section */}
-        <div className="md:w-1/2 relative h-48 md:h-auto">
-          <Image
-            src="/logo.png"
-            alt="Hear Wise"
-            layout="fill"
-            objectFit="cover"
-            priority
-            className="hidden md:block"
-          />
-          <Image
-            src="/logo.png"
-            alt="Hear Wise"
-            layout="fill"
-            objectFit="cover"
-            priority
-            className="md:hidden"
-          />
+        {/* Left Image Section with rounded left corners */}
+        <div className="bg-blue-600 flex items-center justify-center md:w-1/2 h-48 md:h-auto p-4 rounded-l-xl">
+          <div className="p-4 rounded-full">
+            <Image
+              src="/logo.png"
+              alt="Hear Wise"
+              width={200}
+              height={200}
+              priority
+            />
+          </div>
         </div>
 
-        {/* Right Form Section */}
-        <div className="md:w-1/2 p-8 md:p-12">
+        {/* Right Form Section with rounded corners */}
+        <div className="md:w-1/2 rounded-r-xl shadow-xl p-8 md:p-12">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Create Account</h1>
             <p className="text-gray-600">Join our community of food lovers</p>
@@ -114,8 +107,8 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 bg-green-600 text-white font-semibold rounded-lg
-                hover:bg-green-700 focus:ring-4 focus:ring-green-200 transition-all
+              className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg
+                hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 transition-all
                 duration-200 ease-in-out disabled:opacity-70 disabled:cursor-not-allowed
                 flex items-center justify-center"
             >
@@ -143,7 +136,7 @@ export default function RegisterPage() {
             Already have an account?{" "}
             <a
               href="/login"
-              className="text-green-600 hover:text-green-700 font-medium hover:underline"
+              className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
             >
               Sign in
             </a>
