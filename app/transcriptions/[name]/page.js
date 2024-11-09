@@ -1,23 +1,23 @@
-'use client';
+'use client'
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import axios from 'axios';
+import Header from '@/app/components/Header';
 
 const TranscriptionPage = () => {
   const [isClient, setIsClient] = useState(false);
-  const pathname = usePathname();  // Get the pathname
-  const transcriptionName = pathname.split('/').pop(); // Extract the transcription name from the URL
+  const pathname = usePathname();
+  const transcriptionName = pathname.split('/').pop();
   const [transcription, setTranscription] = useState(null);
-  const [loading, setLoading] = useState(true); // Track loading state
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [userEmail, setUserEmail] = useState(null); // State to store the email
+  const [userEmail, setUserEmail] = useState(null);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Fetch user profile data (email, name) after the component is mounted
   useEffect(() => {
     const fetchData = async () => {
       if (isClient) {
@@ -31,7 +31,7 @@ const TranscriptionPage = () => {
             },
           });
           const userData = response.data;
-          setUserEmail(userData.email); // Save the email
+          setUserEmail(userData.email);
         } catch (error) {
           console.error('Error fetching user data:', error);
           setError('Error fetching user data');
@@ -46,7 +46,7 @@ const TranscriptionPage = () => {
     if (userEmail) {
       const fetchTranscriptions = async () => {
         try {
-          const token = localStorage.getItem('token'); // Get the token from localStorage
+          const token = localStorage.getItem('token');
           if (!token) {
             setError('No token found');
             return;
@@ -54,16 +54,14 @@ const TranscriptionPage = () => {
 
           const response = await axios.get('/api/transcribe/load', {
             headers: {
-              Authorization: `Bearer ${token}`, // Pass token if needed
+              Authorization: `Bearer ${token}`,
             },
             params: {
-              email: userEmail,  // Include the email as a query parameter
+              email: userEmail,
             },
           });
 
           const transcriptions = response.data.transcriptions || [];
-
-          // Filter for the requested transcription
           const filteredTranscription = transcriptions.find(
             (t) => t.name === transcriptionName
           );
@@ -77,7 +75,7 @@ const TranscriptionPage = () => {
           console.error('Error fetching transcriptions:', err);
           setError('Error fetching transcriptions');
         } finally {
-          setLoading(false);  // Set loading to false when the data is fetched
+          setLoading(false);
         }
       };
 
@@ -110,19 +108,25 @@ const TranscriptionPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex bg-[url('/bg.png')] bg-cover bg-center">
-      <div className="flex-grow">
-        <div className="flex justify-center mt-12">
-          <h1 className="text-4xl font-bold text-gray-800 bg-gray-200 py-4 px-6 rounded-lg shadow-md">
-            Transcription: {transcription.name}
+    <div className="min-h-screen flex flex-col items-center bg-[url('/bg.png')] bg-cover bg-center">
+      <Header Name={"Transcriptions"} />
+      
+      {/* Transcription Container */}
+      <div className="relative mt-[15rem] w-full max-w-2xl bg-white rounded-lg shadow-lg p-8"> {/* Adjusted margin-top to move down */}
+
+        {/* Blue Header Strip */}
+        
+        <div className="absolute top-0 left-0 w-full h-8 bg-[#238EC7] rounded-t-lg shadow-md">
+        <h1 className="text-2xl text-[#fff] mb-4 font-bold text-center ">
+            {transcription.name}
           </h1>
         </div>
-
-        <div className="mt-8 px-4 md:px-12">
-          <div className="bg-gray-200 p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold text-gray-800">{transcription.name}</h2>
-            <p className="text-gray-600">{transcription.transcription}</p>
-          </div>
+        
+        {/* Main Content Box with Border and Scrolling */}
+        <div className="bg-white border-4 border-gray-300 rounded-lg p-6 mt-7 h-[250px] overflow-y-auto shadow-md">
+          <p className="text-gray-600 text-base leading-relaxed font-bold">
+            {transcription.transcription}
+          </p>
         </div>
       </div>
     </div>

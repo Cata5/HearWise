@@ -1,4 +1,4 @@
-import { FaHome, FaArchive, FaInfoCircle } from 'react-icons/fa';
+import { FaHome, FaArchive, FaInfoCircle, FaUser } from 'react-icons/fa'; // Import FaUser for profile icon
 import { useRouter } from 'next/navigation'; // Import useRouter for navigation
 
 const SideBar = ({ activeSection, setActiveSection }) => {
@@ -7,11 +7,13 @@ const SideBar = ({ activeSection, setActiveSection }) => {
   const handleNavigation = (section) => {
     setActiveSection(section); // Update the active section
     if (section === 'home') {
-      router.push('/'); // Navigate to the profile page
-    } else if (section === 'archive') {
-      router.push('repo'); // Navigate to the archive page
+      router.push('/'); // Navigate to the home page
+    } else if (section === 'repo') {
+      router.push('/repo'); // Navigate to the archive page
     } else if (section === 'info') {
       router.push('/info'); // Navigate to the info page
+    } else if (section === 'profile') {
+      router.push('/profile'); // Navigate to the profile page
     }
   };
 
@@ -25,8 +27,8 @@ const SideBar = ({ activeSection, setActiveSection }) => {
           <FaHome />
         </div>
         <div
-          className={`text-white text-2xl cursor-pointer p-2 rounded-full ${activeSection === 'archive' ? 'bg-[#066296]' : ''}`}
-          onClick={() => handleNavigation('archive')} // On click, navigate to 'archive'
+          className={`text-white text-2xl cursor-pointer p-2 rounded-full ${activeSection === 'repo' ? 'bg-[#066296]' : ''}`}
+          onClick={() => handleNavigation('repo')} // On click, navigate to 'archive'
         >
           <FaArchive />
         </div>
@@ -35,6 +37,12 @@ const SideBar = ({ activeSection, setActiveSection }) => {
           onClick={() => handleNavigation('info')} // On click, navigate to 'info'
         >
           <FaInfoCircle />
+        </div>
+        <div
+          className={`text-white text-2xl p-2 cursor-pointer rounded-full ${activeSection === 'profile' ? 'bg-[#066296]' : ''}`}
+          onClick={() => handleNavigation('profile')} // On click, navigate to 'profile'
+        >
+          <FaUser />
         </div>
       </div>
     </div>

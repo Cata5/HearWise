@@ -13,6 +13,7 @@ const RepoPage = () => {
   const [transcripts, setTranscripts] = useState([]);
   const [userEmail, setUserEmail] = useState(null);
   const [error, setError] = useState(null);
+  const [activeSection, setActiveSection] = useState('repo');
   const [userName, setUserName] = useState('');
   const router = useRouter(); // Initialize router for navigation
   
@@ -27,7 +28,7 @@ const RepoPage = () => {
       if (isClient) {
         const token = localStorage.getItem('token');
         if (!token) return;
-
+  
         try {
           const response = await axios.get('/api/profile', {
             headers: {
@@ -38,12 +39,12 @@ const RepoPage = () => {
           setUserEmail(userData.email);
           setUserName(userData.name);
         } catch (error) {
-          console.error('Error fetching user data:', error);
+          console.error('Error fetching user data:', error.response ? error.response : error);
           setError('Error fetching user data');
         }
       }
     };
-
+  
     fetchData();
   }, [isClient]);
 
@@ -81,11 +82,15 @@ const RepoPage = () => {
     return <p className="text-center text-xl font-semibold mt-4">Client-side rendering in progress...</p>;
   }
 
+  // Show error if there's any
+  if (error) {
+    return <p className="text-center text-xl font-semibold mt-4 text-red-500">{error}</p>;
+  }
+
   return (
     <div className="min-h-screen flex bg-[url('/bg.png')] bg-cover bg-center">
       {/* Sidebar */}
-      <Sidebar activeSection="transcriptions" />
-
+      <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
       {/* Main Content */}
       <div className="flex-grow">
         {/* Header */}
@@ -93,15 +98,7 @@ const RepoPage = () => {
 
         {/* Transcription Section */}
         <div className="mt-[17rem] flex justify-end px-12">
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {error && (
-              <p className="text-red-600 text-center">{error}</p>
-            )}
-            {userEmail && (
-              <p className="text-lg text-center text-gray-700 mb-6">
-                Welcome, <span className="font-semibold">{userName}</span> ({userEmail})
-              </p>
-            )}
+          <div className="flex items-center justify-center mx-auto gap-8 place-items-center">
             {transcripts.length > 0 ? (
               transcripts.map((transcription, index) => (
                 <Link key={index} href={`/transcriptions/${transcription.name}`} passHref>
@@ -115,18 +112,6 @@ const RepoPage = () => {
               <p className="col-span-full text-center text-gray-500">No transcriptions available.</p>
             )}
           </div>
-        </div>
-
-
-        {/* Logo to navigate home */}
-        <div className="absolute top-0 left-4 cursor-pointer" onClick={handleLogoClick}>
-          <img src="/left-logo.png" alt="Left Logo" className="h-[7ch] w-auto mb-[10px]" />
-        </div>
-        <div
-          className="absolute top-0 right-4 cursor-pointer"
-          onClick={handleLogoClick}
-        >
-          <img src="/main.png" alt="Logo" className="h-[7ch] w-auto invert mb-[10px]" />
         </div>
       </div>
     </div>

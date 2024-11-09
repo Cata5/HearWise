@@ -5,7 +5,7 @@ import Sidebar from '../components/SideBar'
 import Header from '../components/Header';
 
 export default function AboutUsPage() {
-  const [activeSection, setActiveSection] = useState('about');
+  const [activeSection, setActiveSection] = useState('info');
   const handleLogoClick = () => {
     router.push('/'); // Navigate to the login page when the logo is clicked
   };
@@ -33,13 +33,7 @@ export default function AboutUsPage() {
             <a className="text-[#101010] font-extrabold text-2xl">Join </a><a href="/" className="text-[#0077B6] hover:text-[#238EC7] font-extrabold text-2xl">HearWise</a> <a className="text-[#101010] font-extrabold text-2xl"> to experience cleaner, more accessible communication.</a>
           </p>
           </div>
-        </div>  
-        <div 
-            className="absolute top-0 right-4 cursor-pointer"
-            onClick={handleLogoClick}
-          >
-            <img src="/main.png" alt="Logo" className="h-[7ch] w-auto invert mb-[10px] " />
-         </div>      
+        </div>      
       </div>
     </div>
   );

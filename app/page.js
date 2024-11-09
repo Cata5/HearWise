@@ -40,9 +40,6 @@ export default function HearWisePage() {
     return null; // Prevent rendering before component is mounted on the client side
   }
 
-  const handleLogoClick = () => {
-    router.push('/profile'); // Navigate to the login page when the logo is clicked
-  };
 
   const handleTranscribeClick = () => {
     const token = localStorage.getItem('token');
@@ -72,7 +69,7 @@ export default function HearWisePage() {
             It’s nice to hear from you again!
           </p>
           <button
-            className="bg-[#0678fe] p-2 rounded-md max-w-[15ch]"
+            className="bg-[#0077B6] hover:bg-[#006398] p-2 rounded-md max-w-[15ch]"
             onClick={handleTranscribeClick}
           >
             Start Transcribing
@@ -81,12 +78,7 @@ export default function HearWisePage() {
       </div>
 
       {/* Logo in the top-right corner */}
-      <div 
-        className="absolute top-4 right-4 cursor-pointer"
-        onClick={handleLogoClick}
-      >
-        <img src="/account.png" alt="Logo" className="h-[7ch] w-auto invert" />
-      </div>
+     
     </div>
   );
 }

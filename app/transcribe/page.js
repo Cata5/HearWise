@@ -28,7 +28,7 @@ export default function AudioTranscription() {
           // Fetch user profile, including email
           const response = await axios.get('/api/profile', {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: 'Bearer ${token}',
             },
           });
 
@@ -41,7 +41,7 @@ export default function AudioTranscription() {
     };
 
     fetchData();
-  }, [isClient]); // Fetch data after `isClient` is set to true to ensure it's only done client-side
+  }, [isClient]); // Fetch data after isClient is set to true to ensure it's only done client-side
 
   if (!isClient) {
     return null; // Prevent rendering before component is mounted on the client side
@@ -150,7 +150,7 @@ export default function AudioTranscription() {
       formData.append('audio', file);
       setLoading(true);
       try {
-        const response = await axios.post('http://localhost:5000/transcribe', formData);
+        const response = await axios.post('http://127.0.0.1:5000/transcribe', formData);
         console.log('File transcription response:', response); // Log file transcription response
         if (response.data.transcription) {
           setTranscription(response.data.transcription);

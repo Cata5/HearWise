@@ -26,7 +26,7 @@ export default function RegisterPage() {
   async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
-    setError("");
+    setError(""); // Clear previous errors
 
     try {
       const response = await fetch("/api/auth/register", {
@@ -38,8 +38,10 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (response.ok) {
+        // Redirect to login page upon successful registration
         window.location.href = "/login";
       } else {
+        // If the email already exists or other error occurs, display the error message
         setError(data.message || "Registration failed. Please try again.");
       }
     } catch (err) {
@@ -56,14 +58,14 @@ export default function RegisterPage() {
         <div className="flex items-center justify-center md:w-1/2 h-48 md:h-auto p-4 rounded-l-xl" 
           style={{ backgroundImage: "url('/bk1.png')", backgroundSize: "cover", backgroundPosition: "center" }}>
             <div className="p-4 scale-50 md:scale-100 rounded-full">
-            <Image
-              src="/logo.png"
-              alt="Hear Wise"
-              width={200}
-              height={200}
-              priority
-            />
-          </div>
+              <Image
+                src="/logo.png"
+                alt="Hear Wise"
+                width={200}
+                height={200}
+                priority
+              />
+            </div>
         </div>
 
         {/* Right Form Section with rounded corners */}

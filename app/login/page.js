@@ -4,7 +4,7 @@ import Image from "next/image";
 import { FaEnvelope } from "react-icons/fa";
 import InputField from "../components/InputField";
 import PasswordField from "../components/passwordField"; // Correct casing
-import Cookies from "js-cookie";  // Import js-cookie
+
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({

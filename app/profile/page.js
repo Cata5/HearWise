@@ -20,9 +20,6 @@ export default function EditProfilePage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [activeSection, setActiveSection] = useState('profile');
-  const handleLogoClick = () => {
-    router.push('/'); // Navigate to the login page when the logo is clicked
-  };
 
   useEffect(() => {
     setIsClient(true);
@@ -123,13 +120,6 @@ export default function EditProfilePage() {
             >
               {loading ? 'Saving...' : 'Save Changes'}
             </button>
-            {/* Logo in the top-right corner */}
-            <div 
-              className="absolute top-0 right-4 cursor-pointer"
-              onClick={handleLogoClick}
-            >
-              <img src="/main.png" alt="Logo" className="h-[7ch] w-auto invert mb-[10px] " />
-            </div>
           </div>
         </div>
       </div>
