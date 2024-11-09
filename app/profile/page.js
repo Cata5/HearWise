@@ -85,18 +85,16 @@ export default function AudioTranscription() {
   };
 
   return (
-    <div className="h-screen bg-[url('/bg.png')] bg-cover bg-center font-sans text-gray-800">
-      
-      {/* Fixed Header */}
-      <Header Name={'Transcript'} className="fixed top-0 left-0 w-full z-50 bg-white shadow-md" />
-      
+    <div className="h-[100vh] bg-[url('/bg.png')] bg-cover bg-center font-sans text-gray-800 ">
+      <Header Name={'Transcript'} />
+
       {/* Main Content */}
-      <div className="flex flex-col items-center justify-center w-full h-full pt-[100px]">
+      <div className="flex flex-col items-center justify-center w-full text-center space-y-4 mt-10">
         {/* Start Recording Button */}
         <button
           onClick={handleStartRecording}
           disabled={loading}
-          className="px-6 py-3 bg-blue-500 text-white rounded-md disabled:opacity-50 mb-4"
+          className="px-6 py-3 bg-blue-500 text-white rounded-md disabled:opacity-50"
         >
           Start Recording
         </button>
@@ -105,13 +103,13 @@ export default function AudioTranscription() {
         <button
           onClick={handleStopRecording}
           disabled={!loading}
-          className="px-6 py-3 bg-red-500 text-white rounded-md disabled:opacity-50 mb-4"
+          className="px-6 py-3 bg-red-500 text-white rounded-md disabled:opacity-50"
         >
           Stop Recording
         </button>
 
         {/* File Upload */}
-        <label className="block mb-4">
+        <label className="block mt-4">
           <span className="text-gray-700 font-semibold">Upload Pre-recorded Audio</span>
           <input
             type="file"
@@ -120,18 +118,18 @@ export default function AudioTranscription() {
             className="mt-2 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
           />
         </label>
-
-        {/* Loading Text */}
-        {loading && <p className="text-center text-blue-500 font-semibold mt-4">Processing audio...</p>}
-
-        {/* Transcription Display */}
-        {transcription && (
-          <div className="mt-6 p-6 self-center bg-gray-100 rounded-md shadow-md max-w-md w-full text-center">
-            <h3 className="text-xl font-semibold mb-2">Transcription:</h3>
-            <p className="whitespace-pre-wrap">{transcription}</p>
-          </div>
-        )}
       </div>
+
+      {/* Loading Text */}
+      {loading && <p className="text-center text-blue-500 font-semibold mt-4">Processing audio...</p>}
+
+      {/* Transcription Display */}
+      {transcription && (
+        <div className="mt-6 p-6 bg-gray-100 rounded-md shadow-md max-w-md w-full text-center">
+          <h3 className="text-xl font-semibold mb-2">Transcription:</h3>
+          <p className="whitespace-pre-wrap">{transcription}</p>
+        </div>
+      )}
     </div>
   );
 }
