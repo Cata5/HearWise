@@ -66,7 +66,7 @@ export default function HearWisePage() {
         className="absolute top-4 right-4 cursor-pointer"
         onClick={handleLogoClick}
       >
-        <img src="public/account.png" alt="account" className="h-10 w-auto" />
+        <img src="/public/account.png" alt="Logo" className="h-[10ch] w-auto" />
       </div>
     </div>
   );

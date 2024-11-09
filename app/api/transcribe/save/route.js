@@ -1,41 +1,65 @@
-// Import the Redis instance from lib/redis
-import redis from '../lib/redis';
+import bcrypt from 'bcrypt';
+import redis from '../../../lib/redis';
+import jwt from 'jsonwebtoken';  // Import JWT for decoding the token
 
-// Function to save the transcription
-const saveTranscription = async (userId, transcription) => {
-  try {
-    // Store the transcription in Redis with a key like transcription:{userId}
-    await redis.set(`transcription:${userId}`, transcription);
-    console.log('Transcription saved!');
-  } catch (error) {
-    console.error('Error saving transcription:', error);
-  }
-};
+// Helper function to hash the email
+async function hashEmail(email) {
+  const saltRounds = 10;
+  const hashedEmail = await bcrypt.hash(email, saltRounds);
+  return hashedEmail;
+}
 
-// Function to retrieve the transcription
-const getTranscription = async (userId) => {
-  try {
-    // Retrieve the transcription using the key
-    const transcription = await redis.get(`transcription:${userId}`);
-    if (transcription) {
-      console.log('Transcription retrieved:', transcription);
-      return transcription;
-    } else {
-      console.log('No transcription found for user:', userId);
-      return null;
+export default async function handler(req, res) {
+  if (req.method === 'POST') {
+    const { name, transcription } = req.body;
+    const token = req.headers.authorization?.split(" ")[1];  // Extract token from Authorization header
+
+    // Ensure all required fields are present
+    if (!name || !transcription || !token) {
+      return res.status(400).json({ success: false, message: "Missing required fields" });
     }
-  } catch (error) {
-    console.error('Error retrieving transcription:', error);
-    return null;
+
+    try {
+      // Decode the JWT to get the user's email
+      const decodedToken = jwt.verify(token, 'your-secret-key');  // Use the same secret key you use for signing JWTs
+      const email = decodedToken.email;  // Assuming the email is stored in the token
+
+      // Hash the email before saving in Redis
+      const hashedEmail = await hashEmail(email);
+
+      // Construct the Redis key for transcription data
+      const userTranscribeKey = `accounts:${hashedEmail}:transcribes`;
+
+      // Get existing transcription data from Redis (if it exists)
+      const existingTranscriptions = await redis.get(userTranscribeKey);
+
+      let transcriptions = {};
+
+      if (existingTranscriptions) {
+        // Parse existing transcriptions if they exist
+        transcriptions = JSON.parse(existingTranscriptions);
+      }
+
+      // Dynamically add the transcription
+      transcriptions[name] = transcription;
+
+      // Save the updated transcription data back into Redis
+      await redis.set(userTranscribeKey, JSON.stringify(transcriptions));
+
+      // Return a success response
+      return res.status(200).json({
+        success: true,
+        message: "Transcription saved successfully",
+        data: transcriptions,
+      });
+    } catch (error) {
+      console.error("Error saving transcription:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+      });
+    }
+  } else {
+    res.status(405).json({ success: false, message: "Method Not Allowed" });
   }
-};
-
-// Example usage
-const userId = 'user123';
-const transcriptionText = 'This is a transcribed audio text.';
-
-// Save transcription
-saveTranscription(userId, transcriptionText);
-
-// Retrieve transcription
-getTranscription(userId);
+}
