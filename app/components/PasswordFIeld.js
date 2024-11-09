@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 
-export default function PasswordField({ value, onChange, showPassword, onTogglePassword }) {
+export default function Passwordfield({ value, onChange, showPassword, onTogglePassword }) {
   return (
     <div className="relative flex items-center border-b-2 border-gray-300 focus-within:border-blue-500 transition-colors duration-200">
       <FaLock className="absolute left-3 text-gray-500" />
@@ -9,7 +9,7 @@ export default function PasswordField({ value, onChange, showPassword, onToggleP
         type={showPassword ? "text" : "password"}
         name="password"
         id="password"
-        placeholder="Create a password"
+        placeholder="Enter your password"
         value={value}
         onChange={onChange}
         className="w-full px-10 py-3 bg-transparent focus:outline-none text-gray-700 placeholder-gray-400"

@@ -6,6 +6,9 @@ import Header from '../components/Header';
 
 export default function AboutUsPage() {
   const [activeSection, setActiveSection] = useState('about');
+  const handleLogoClick = () => {
+    router.push('/'); // Navigate to the login page when the logo is clicked
+  };
 
   return (
     <div className="min-h-screen flex bg-[url('/bg.png')] bg-cover bg-center">
@@ -17,7 +20,6 @@ export default function AboutUsPage() {
         {/* Header */}
         <Header Name={"Info"} />
 
-
         {/* Team Section */}
         <div className="flex justify-center mt-[17rem] mx-[2rem] "> {/* Softer margin */}
           <div className="bg-gray-200 py-10 px-8 max-w-[1100px] mx-auto text-gray-800 text-center text-lg sm:text-xl md:text-2xl font-medium rounded-lg shadow-lg space-y-4">
@@ -27,15 +29,17 @@ export default function AboutUsPage() {
             <p>
               HearWise is dedicated to enhancing communication for individuals with hearing impairments and those who find spoken words challenging to understand. Our platform offers real-time transcription, acting like live subtitles, and saves conversations for easy access anytime. With an intuitive, customizable interface and local use of Whisper AI, HearWise makes communication inclusive and accessible.
             </p>
+            <p className="text-lg sm:text-xl md:text-2xl font-medium text-center text-gray-800">
+            <a className="text-[#101010] font-extrabold text-2xl">Join </a><a href="/" className="text-[#0077B6] hover:text-[#238EC7] font-extrabold text-2xl">HearWise</a> <a className="text-[#101010] font-extrabold text-2xl"> to experience cleaner, more accessible communication.</a>
+          </p>
           </div>
-        </div>
-
-        {/* Contact Us Button */}
-        <div className="flex flex-col items-center">
-          <button className="w-[300px] px-4 py-2 text-white font-bold tracking-wide bg-blue-600 rounded-md hover:bg-blue-700">
-            Contact Us
-          </button>
-        </div>
+        </div>  
+        <div 
+            className="absolute top-0 right-4 cursor-pointer"
+            onClick={handleLogoClick}
+          >
+            <img src="/main.png" alt="Logo" className="h-[7ch] w-auto invert mb-[10px] " />
+         </div>      
       </div>
     </div>
   );

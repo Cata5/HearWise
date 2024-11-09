@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { FaUser, FaEnvelope } from "react-icons/fa";
 import InputField from "../components/InputField";
-import PasswordField from "../components/PasswordFIeld";
+import PasswordField from "../components/passwordField";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -53,8 +53,9 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-[url('/bg.png')] flex items-center justify-center p-4 bg-cover bg-center">
       <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
         {/* Left Image Section with rounded left corners */}
-        <div className="bg-blue-600 flex items-center justify-center md:w-1/2 h-48 md:h-auto p-4 rounded-l-xl">
-          <div className="p-4 scale-50 md:scale-100 rounded-full">
+        <div className="flex items-center justify-center md:w-1/2 h-48 md:h-auto p-4 rounded-l-xl" 
+          style={{ backgroundImage: "url('/bk1.png')", backgroundSize: "cover", backgroundPosition: "center" }}>
+            <div className="p-4 scale-50 md:scale-100 rounded-full">
             <Image
               src="/logo.png"
               alt="Hear Wise"
@@ -69,7 +70,7 @@ export default function RegisterPage() {
         <div className="md:w-1/2 rounded-r-xl shadow-xl p-8 md:p-12">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Create Account</h1>
-            <p className="text-gray-600">Join our community of food lovers</p>
+            <p className="text-gray-600">Join our community</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -107,8 +108,8 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg
-                hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 transition-all
+              className="w-full py-3 bg-[#0077B6] text-white font-semibold rounded-lg
+                hover:bg-[#006398] focus:ring-4 focus:ring-blue-200 transition-all
                 duration-200 ease-in-out disabled:opacity-70 disabled:cursor-not-allowed
                 flex items-center justify-center"
             >
@@ -136,7 +137,7 @@ export default function RegisterPage() {
             Already have an account?{" "}
             <a
               href="/login"
-              className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
+              className="text-[#0077B6] hover:text-[#006398] font-medium hover:underline"
             >
               Sign in
             </a>

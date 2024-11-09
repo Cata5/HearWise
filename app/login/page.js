@@ -3,7 +3,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { FaEnvelope } from "react-icons/fa";
 import InputField from "../components/InputField";
-import PasswordField from "../components/PasswordField";
+import PasswordField from "../components/passwordField"; // Correct casing
+import Cookies from "js-cookie";  // Import js-cookie
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -26,19 +27,20 @@ export default function LoginPage() {
     event.preventDefault();
     setIsLoading(true);
     setError("");
-
+  
     try {
       const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
-        localStorage.setItem("token", data.token);
-        window.location.href = "/";
+        // Store token in localStorage
+        localStorage.setItem('token', data.token);  // Use localStorage instead of Cookies
+        window.location.href = "/";  // Redirect after successful login
       } else {
         setError(data.message || "Invalid email or password");
       }
@@ -48,12 +50,13 @@ export default function LoginPage() {
       setIsLoading(false);
     }
   }
-
+  
   return (
     <div className="min-h-screen bg-[url('/bg.png')] bg-cover bg-center h-screen flex items-center justify-center">
       <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
         {/* Left Image Section with rounded left corners */}
-        <div className="bg-blue-600 flex items-center justify-center md:w-1/2 h-48 md:h-auto p-4 rounded-l-xl">
+        <div className="flex items-center justify-center md:w-1/2 h-48 md:h-auto p-4 rounded-l-xl" 
+          style={{ backgroundImage: "url('/bk1.png')", backgroundSize: "cover", backgroundPosition: "center" }}>
           <div className="p-4 scale-50 md:scale-100 rounded-full">
             <Image
               src="/logo.png"
@@ -98,8 +101,8 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg
-                hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 transition-all
+              className="w-full py-3 bg-[#0077B6] text-white font-semibold rounded-lg
+                hover:bg-[#006398] focus:ring-4 focus:ring-blue-200 transition-all
                 duration-200 ease-in-out disabled:opacity-70 disabled:cursor-not-allowed
                 flex items-center justify-center"
             >
@@ -127,7 +130,7 @@ export default function LoginPage() {
             Don't have an account?{" "}
             <a
               href="/register"
-              className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
+              className="text-[#0077B6] hover:text-[#006398] font-medium hover:underline"
             >
               Create account
             </a> 

@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchUserData } from './utils/utils';
-import Sidebar from './components/SideBar'; // Make sure this is named correctly
+import { fetchUserData } from './utils/utils';  // Ensure this is the correct path to your helper functions
+import Sidebar from './components/SideBar'; 
 import Header from './components/Header';
 import { useRouter } from 'next/navigation';
 
@@ -19,28 +19,40 @@ export default function HearWisePage() {
   useEffect(() => {
     const fetchData = async () => {
       if (isClient) {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token'); // Get token from localStorage
+        console.log('Token from localStorage:', token); // Log token to see if it's being retrieved properly
         if (!token) return;
 
         try {
-          const userData = await fetchUserData(token);
-          setUserName(userData.name);
+          const userData = await fetchUserData(token); // Fetch user data with the token
+          console.log('Fetched user data:', userData); // Log user data
+          setUserName(userData.name); // Set the username to state
         } catch (error) {
-          console.error('Error fetching user data:', error);
+          console.error('Error fetching user data:', error); // Log any errors during data fetching
         }
       }
     };
 
     fetchData();
-  }, [isClient]); // Fetch data after isClient is set to true
+  }, [isClient]); // Fetch data after `isClient` is set to true to ensure it's only done client-side
 
   if (!isClient) {
-    return null; // Avoid rendering before the component is mounted on the client side
+    return null; // Prevent rendering before component is mounted on the client side
   }
 
-  // Handle logo click to navigate to the login page
   const handleLogoClick = () => {
-    router.push('/login'); // Navigate to login page
+    router.push('/profile'); // Navigate to the login page when the logo is clicked
+  };
+
+  const handleTranscribeClick = () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token is missing');
+      return;
+    }
+
+    // Navigate to the /transcribe page
+    router.push('/transcribe');
   };
 
   return (
@@ -51,13 +63,20 @@ export default function HearWisePage() {
       {/* Main Content */}
       <div className="flex-grow">
         <Header Name={'HearWise'} />
-           
+        
         <div className="flex flex-col items-center justify-center p-4 sm:p-6 mt-[17rem]">
           <h2 className="text-4xl sm:text-5xl font-semibold text-gray-800 text-center mb-3">
             Welcome back, {userName || "[Username]"}!
           </h2>
-          <p className="text-gray-600 text-center text-md sm:text-lg mb-6">It’s nice to hear from you again!</p>
-          <button className="bg-[#0678fe] p-2 rounded-md max-w-[15ch]" onClick={() => router.push('/transcribe')}>Start Transcribing</button>
+          <p className="text-gray-600 text-center text-md sm:text-lg mb-6">
+            It’s nice to hear from you again!
+          </p>
+          <button
+            className="bg-[#0678fe] p-2 rounded-md max-w-[15ch]"
+            onClick={handleTranscribeClick}
+          >
+            Start Transcribing
+          </button>
         </div>
       </div>
 
@@ -66,7 +85,7 @@ export default function HearWisePage() {
         className="absolute top-4 right-4 cursor-pointer"
         onClick={handleLogoClick}
       >
-        <img src="/public/account.png" alt="Logo" className="h-[10ch] w-auto" />
+        <img src="/account.png" alt="Logo" className="h-[7ch] w-auto invert" />
       </div>
     </div>
   );

@@ -4,7 +4,8 @@ import Image from 'next/image';
 import { Bowlby_One_SC } from 'next/font/google';
 import { FaHome } from 'react-icons/fa'; // Import only the icons you need
 import { useRouter } from 'next/navigation';
-
+import Header from "../components/Header";
+import SideBar from "../components/SideBar";
 const bowlbyOne = Bowlby_One_SC({
   weight: '400',
   subsets: ['latin'],
@@ -18,6 +19,10 @@ export default function EditProfilePage() {
   const [isClient, setIsClient] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [activeSection, setActiveSection] = useState('profile');
+  const handleLogoClick = () => {
+    router.push('/'); // Navigate to the login page when the logo is clicked
+  };
 
   useEffect(() => {
     setIsClient(true);
@@ -49,20 +54,13 @@ export default function EditProfilePage() {
 
     fetchUserData();
   }, []);
-
-  const handleHomeClick = () => {
-    if (isClient) {
-      router.push('/'); // Redirect to the homepage
-    }
-  };
-
   const handleSaveProfile = async () => {
     setLoading(true);
     const token = localStorage.getItem("token");
     if (!token) return;
 
     try {
-      const response = await fetch('/api/user/update', {
+      const response = await fetch('/api/profile/update', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -85,38 +83,13 @@ export default function EditProfilePage() {
 
   return (
     <div className="min-h-screen flex bg-[url('/bg.png')] bg-cover bg-center">
-      <div className="w-[50px] sm:w-[60px] bg-[#0678b8] fixed left-0 top-1/2 transform -translate-y-1/2 flex flex-col items-center py-4 rounded-full sm:flex sm:flex-col sm:space-y-4 sm:px-2">
-        <div className="space-y-2 sm:space-y-4">
-          <div
-            className={`text-white text-2xl p-2 cursor-pointer rounded-full`}
-            onClick={handleHomeClick}
-          >
-            <FaHome />
-          </div>
-        </div>
-      </div>
+      <SideBar activeSection={activeSection} setActiveSection={setActiveSection} />
+      
 
       <div className="flex-grow">
-        <div className="relative w-full">
-          <Image
-            src="/logo.png"
-            alt="Hear Wise"
-            width={1000}
-            height={1000}
-            priority
-            className="absolute top-2 left-[1.75rem] sm:top-4 md:top-4 w-[5vw] h-[5vw] sm:w-[10vw] sm:h-[10vw] md:w-[6vw] md:h-[6.6vw]"
-          />
-          <img 
-            src="/nav.png" 
-            alt="navbar" 
-            className="inset-x-0"
-          />
-          <h1 className={`${bowlbyOne.className} absolute inset-x-0 top-1 flex justify-center text-[1.9ch] md:text-[3ch] xl:top-3 xl:text-[5ch] font-bold tracking-wide text-white`}>
-            HearWise
-          </h1>
-        </div>
+       <Header Name={'Account Details'}/>
 
-        <div className="flex flex-col items-center p-4 sm:p-6">
+        <div className="mt-[17rem] flex flex-col items-center p-4 sm:p-6">
           <h2 className="text-4xl sm:text-5xl font-semibold text-gray-800 text-center mb-3">
             Edit Your Profile, {userName || "[Username]"}!
           </h2>
@@ -144,12 +117,19 @@ export default function EditProfilePage() {
             {error && <p className="text-red-500 text-center">{error}</p>}
 
             <button
-              className="w-full px-4 py-2 text-white font-bold tracking-wide bg-[#0678b8] rounded-md hover:bg-blue-700 disabled:bg-gray-400"
+              className="w-full px-4 py-2 text-white font-bold tracking-wide bg-[#0678b8] rounded-md hover:bg-[#006398] disabled:bg-gray-400"
               onClick={handleSaveProfile}
               disabled={loading}
             >
               {loading ? 'Saving...' : 'Save Changes'}
             </button>
+            {/* Logo in the top-right corner */}
+            <div 
+              className="absolute top-0 right-4 cursor-pointer"
+              onClick={handleLogoClick}
+            >
+              <img src="/main.png" alt="Logo" className="h-[7ch] w-auto invert mb-[10px] " />
+            </div>
           </div>
         </div>
       </div>
