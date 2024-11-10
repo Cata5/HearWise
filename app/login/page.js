@@ -53,7 +53,7 @@ export default function LoginPage() {
   
   return (
     <div className="min-h-screen bg-[url('/bg.png')] bg-cover bg-center h-screen flex items-center justify-center">
-      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden m-4 flex flex-col md:flex-row">
         {/* Left Image Section with rounded left corners */}
         <div className="flex items-center justify-center md:w-1/2 h-48 md:h-auto p-4 rounded-l-xl" 
           style={{ backgroundImage: "url('/bk1.png')", backgroundSize: "cover", backgroundPosition: "center" }}>

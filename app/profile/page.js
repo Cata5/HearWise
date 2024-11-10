@@ -86,7 +86,7 @@ export default function EditProfilePage() {
       <div className="flex-grow">
        <Header Name={'Account Details'}/>
 
-        <div className="mt-[17rem] flex flex-col items-center p-4 sm:p-6">
+        <div className="mt-[17rem] flex flex-col items-center  ml-10 m-2 p-4 sm:p-6">
           <h2 className="text-4xl sm:text-5xl font-semibold text-gray-800 text-center mb-3">
             Edit Your Profile, {userName || "[Username]"}!
           </h2>

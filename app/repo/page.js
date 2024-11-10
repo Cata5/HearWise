@@ -104,8 +104,8 @@ const RepoPage = () => {
                 <Link key={index} href={`/transcriptions/${transcription.name}`} passHref>
                   <div className="bg-gray-200 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow cursor-pointer text-center space-y-4">
                     <h2 className="text-xl font-bold text-gray-800">{transcription.name}</h2>
-                    <p className="text-gray-600">{transcription.transcription}</p>
                   </div>
+
                 </Link>
               ))
             ) : (

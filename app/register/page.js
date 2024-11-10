@@ -14,6 +14,7 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,8 +24,17 @@ export default function RegisterPage() {
     }));
   };
 
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
   async function handleSubmit(event) {
     event.preventDefault();
+    if (!isChecked) {
+      setError("Please agree to the terms and conditions.");
+      return;
+    }
+    
     setIsLoading(true);
     setError(""); // Clear previous errors
 
@@ -100,6 +110,23 @@ export default function RegisterPage() {
               showPassword={showPassword}
               onTogglePassword={() => setShowPassword(!showPassword)}
             />
+
+            {/* Terms and Conditions Checkbox */}
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="terms"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+                className="mr-2 w-4 h-4 text-[#0077B6] focus:ring-[#0077B6] border-gray-300 rounded"
+              />
+              <label htmlFor="terms" className="text-gray-600">
+                I agree to the{" "}
+                <a href="/terms" className="text-[#0077B6] hover:text-[#006398] font-medium underline">
+                  Terms and Conditions
+                </a>
+              </label>
+            </div>
 
             {error && (
               <div className="bg-red-50 text-red-500 p-3 rounded-lg text-sm">

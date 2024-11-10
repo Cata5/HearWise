@@ -61,7 +61,7 @@ export default function HearWisePage() {
       <div className="flex-grow">
         <Header Name={'HearWise'} />
         
-        <div className="flex flex-col items-center justify-center p-4 sm:p-6 mt-[17rem]">
+        <div className="flex flex-col items-center justify-center p-4 m-10 sm:p-6 mt-[17rem]">
           <h2 className="text-4xl sm:text-5xl font-semibold text-gray-800 text-center mb-3">
             Welcome back, {userName || "[Username]"}!
           </h2>
