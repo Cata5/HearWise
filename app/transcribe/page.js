@@ -28,7 +28,7 @@ export default function AudioTranscription() {
           // Fetch user profile, including email
           const response = await axios.get('/api/profile', {
             headers: {
-              Authorization: 'Bearer ${token}',
+              Authorization: `Bearer ${token}`,
             },
           });
 
@@ -41,7 +41,7 @@ export default function AudioTranscription() {
     };
 
     fetchData();
-  }, [isClient]); // Fetch data after isClient is set to true to ensure it's only done client-side
+  }, [isClient]); // Fetch data after `isClient` is set to true to ensure it's only done client-side
 
   if (!isClient) {
     return null; // Prevent rendering before component is mounted on the client side
@@ -150,7 +150,7 @@ export default function AudioTranscription() {
       formData.append('audio', file);
       setLoading(true);
       try {
-        const response = await axios.post('http://127.0.0.1:5000/transcribe', formData);
+        const response = await axios.post('http://localhost:5000/transcribe', formData);
         console.log('File transcription response:', response); // Log file transcription response
         if (response.data.transcription) {
           setTranscription(response.data.transcription);
@@ -171,6 +171,7 @@ export default function AudioTranscription() {
       <Header Name={'Transcript'} />
 
       {/* Main Content */}
+      
       <div className="flex flex-col items-center justify-center w-full text-center space-y-4">
         {/* Name input field */}
         <input
@@ -185,7 +186,7 @@ export default function AudioTranscription() {
         <button
           onClick={handleStartRecording}
           disabled={loading}
-          className="mt-[18rem] px-6 py-3 bg-blue-500 text-white rounded-md disabled:opacity-50"
+          className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transform transition-transform duration-200 hover:scale-105 disabled:opacity-50"
         >
           Start Recording
         </button>
@@ -194,19 +195,19 @@ export default function AudioTranscription() {
         <button
           onClick={handleStopRecording}
           disabled={!loading}
-          className="px-6 py-3 bg-red-500 text-white rounded-md disabled:opacity-50"
+          className="px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transform transition-transform duration-200 hover:scale-105 disabled:opacity-50"
         >
           Stop Recording
         </button>
 
         {/* File Upload */}
         <label className="block mt-4">
-          <span className="text-gray-700 font-semibold">Upload Pre-recorded Audio</span>
+          <span className="text-gray-100 font-semibold">Upload Pre-recorded Audio</span>
           <input
             type="file"
             accept="audio/*"
             onChange={handleFileUpload}
-            className="mt-2 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
+            className="mt-2 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
           />
         </label>
 
@@ -222,13 +223,13 @@ export default function AudioTranscription() {
       </div>
 
       {/* Loading Text */}
-      {loading && <p className="text-center text-blue-500 font-semibold mt-4">Processing audio...</p>}
+      {loading && <p className="text-center text-white font-semibold mt-4 animate-pulse">Processing audio...</p>}
 
       {/* Transcription Display */}
       {transcription && (
-        <div className="mt-6 p-6 bg-gray-100 rounded-md shadow-md max-w-md w-full text-center">
-          <h3 className="text-xl font-semibold mb-2">Transcription:</h3>
-          <p className="whitespace-pre-wrap">{transcription}</p>
+        <div className="mt-8 p-6 bg-white rounded-lg shadow-lg max-w-lg mx-auto text-center">
+          <h3 className="text-xl font-semibold text-gray-800 mb-2">Transcription:</h3>
+          <p className="whitespace-pre-wrap text-gray-700">{transcription}</p>
         </div>
       )}
     </div>
