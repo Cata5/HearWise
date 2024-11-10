@@ -9,7 +9,7 @@ import Header from "@/app/components/Header";
 const TranscriptionPage = () => {
   const [isClient, setIsClient] = useState(false);
   const pathname = usePathname();
-  const transcriptionName = pathname.split("/").pop(); // Get transcription name from URL
+  const transcriptionName = decodeURIComponent(pathname.split("/").pop().trim()); // Get transcription name, handle spaces
   const [transcription, setTranscription] = useState(null);
   const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -67,11 +67,9 @@ const TranscriptionPage = () => {
             },
           });
 
-          console.log("Transcriptions Response:", response.data); // Add this log to debug
-
           const transcriptions = response.data.transcriptions || [];
           const filteredTranscription = transcriptions.find(
-            (t) => t.name === transcriptionName
+            (t) => t.name.trim() === transcriptionName
           );
 
           if (filteredTranscription) {
@@ -162,13 +160,13 @@ const TranscriptionPage = () => {
           className="mt-4 bg-[#0077B6] hover:bg-[#006398] text-white px-4 py-2 rounded-lg shadow-md"
           disabled={summarizing}
         >
-          {summarizing ? "Summarizing..." : "Summarize"}
+          {summarizing ? "Summarizing...(ETA 2 min)" : "Summarize"}
         </button>
 
         {summary && (
           <div className="mt-4 bg-gray-100 p-4 rounded-lg border-2 border-gray-300 shadow-md">
-            <h2 className="text-xl font-bold mb-2">Summary:</h2>
-            <p className="text-gray-700 text-base leading-relaxed">{summary}</p>
+            <h2 className="text-xl text-black font-bold mb-2">Summary:</h2>
+            <p className="text-black text-base leading-relaxed">{summary}</p>
           </div>
         )}
       </div>
